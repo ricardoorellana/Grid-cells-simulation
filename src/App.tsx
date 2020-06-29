@@ -30,6 +30,7 @@ class App extends Component<{}, state> {
     intervalId: any = 0;
     rowLen: number = 0;
     columnLen: number = 0;
+    defaultEmptyArray: any;
 
     constructor(props: {}) {
         super(props);
@@ -51,12 +52,14 @@ class App extends Component<{}, state> {
         .then(response => response.json())
         .then(response => {
 
-            const grid = response.state || DEFAULT_GRID;
+            const defaultGrid = DEFAULT_GRID.data.state;
+            const grid = response.state || defaultGrid;
 
             this.setState({
                 grid
             });
 
+            this.defaultEmptyArray = this.create2dArray(grid);
         });
     }
 
@@ -64,6 +67,18 @@ class App extends Component<{}, state> {
         const buttonText = !this.state.hasStarted ? 'Start' : 'Pause';
 
         return <button className='actionButton' onClick={this.handleButtonClick}>{ buttonText }</button>;
+    }
+
+    create2dArray(grid: any) {
+        const rows = grid.length;
+        const columns = grid[0].length;
+
+        return [...Array(rows).keys()].map(i => Array(columns).fill(0));
+    }
+
+    get defaultGrid() {
+        // avoid to mutate the state
+        return this.defaultEmptyArray;
     }
 
     handleButtonClick() {
@@ -123,7 +138,7 @@ class App extends Component<{}, state> {
         const rowLen: number = this.state.grid.length;
         const colLen: number = this.state.grid[0].length;
 
-        const newGrid = [...this.state.grid];
+        const newGrid = this.defaultGrid;
  
         for (let i = 0; i < rowLen; i++) {
             for (let j = 0; j < colLen; j++) {

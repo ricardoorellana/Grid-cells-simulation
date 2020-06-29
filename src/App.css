@@ -1,0 +1,37 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.gridTable {
+    padding: 0.5rem;
+    border-collapse: collapse;
+}
+
+.dead {
+    background-color: #a3a3a3;
+}
+
+.sad {
+    background-color: #5daaff;
+}
+
+.happy {
+    background-color: #2cb48a;
+}
+
+td {
+    transition: background-color 0.5s ease-in-out;
+    border: 0px;
+}
+
+.actionButton {
+    margin-top: 20px;
+    width: 100px;
+    height: 60px;
+    font-size: 18px;
+    font-weight: bold;
+}
